@@ -39,7 +39,7 @@ void readMetricsInteractive(FILE *fp, char (*output_string)[MAX_BUF_SIZE], int m
   char selected_metrics[MAX_BUF_SIZE];
 
   // only send if sum_requested_prbs > 0 or if prbs are granted anyway
-  if (metrics.sum_requested_prbs > 0 || (metrics.sum_requested_prbs == 0 && metrics.sum_granted_prbs > 0) || CSV_DEBUG) {
+  if (metrics.sum_requested_prbs > 0 || (metrics.sum_requested_prbs == 0 && metrics.sum_granted_prbs > 0) || CSV_DEBUG || metrics_preset == 2) {
     switch(metrics_preset) {
       case 0:
         sprintf(selected_metrics, "%lu,%d,%llu,%" PRIu16 ","\
@@ -88,6 +88,22 @@ void readMetricsInteractive(FILE *fp, char (*output_string)[MAX_BUF_SIZE], int m
         printf("selected_metrics %s\n", selected_metrics);
 
         break;
+
+      //Initial case for capturing useful metrics for sensing related xApp development
+      case 2:
+        sprintf(selected_metrics, "%lu,%d,"\
+          "%" PRIu8 ",%" PRIu8 ","\
+          "%.2lf,%.2f,%.2f,"\
+          "%" PRIu16 ","\
+          "%" PRIu8 ",
+          metrics.timestamp, metrics.num_ues,
+          metrics.slice_id, metrics.slice_prb,
+          metrics.rx_brate_downlink_Mbps, metrics.ul_rssi, metrics.ul_sinr,
+          metrics.sum_granted_prbs,
+          metrics.ul_n);
+
+        break;
+
       default:
         printf("readMetricsInteractive: Preset %d unknown\n", metrics_preset);
     }
