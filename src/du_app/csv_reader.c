@@ -95,7 +95,7 @@ void readMetricsInteractive(FILE *fp, char (*output_string)[MAX_BUF_SIZE], int m
           "%" PRIu8 ",%" PRIu8 ","\
           "%.2lf,%.2f,%.2f,"\
           "%" PRIu16 ","\
-          "%" PRIu8 ",
+          "%" PRIu8,
           metrics.timestamp, metrics.num_ues,
           metrics.slice_id, metrics.slice_prb,
           metrics.rx_brate_downlink_Mbps, metrics.ul_rssi, metrics.ul_sinr,
